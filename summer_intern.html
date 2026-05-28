@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>有福青年 吉刻出发 - FORVIA 佛瑞亚</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0d1117;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .app {
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: #0d1117;
+        }
+
+        .pages-wrapper {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px 24px 30px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(60px);
+            transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+            position: relative;
+        }
+        .page.prev {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        /* ============ 第1页 - 品牌页 ============ */
+        .page-brand {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(180deg, #0d1117 0%, #161b22 35%, #1c2333 70%, #161b22 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-brand::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.06) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .page-brand::after {
+            content: '';
+            position: absolute;
+            bottom: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.5), transparent);
+            pointer-events: none;
+        }
+        .brand-badge {
+            font-size: 12px;
+            color: #a78bfa;
+            letter-spacing: 5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            opacity: 0.85;
+        }
+        .brand-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 6px;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c4b5fd 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .brand-subtitle {
+            font-size: 40px;
+            font-weight: 900;
+            color: #818cf8;
+            letter-spacing: 6px;
+            margin-bottom: 36px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c7d2fe;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .brand-slogan {
+            font-size: 13px;
+            color: #8b8fbb;
+            font-style: italic;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        .brand-arrow {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 1;
+            cursor: pointer;
+        }
+        .brand-arrow svg {
+            width: 30px;
+            height: 30px;
+            stroke: rgba(139, 143, 187, 0.6);
+        }
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* ============ 第2页 - 公司介绍 ============ */
+        .page-intro {
+            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+            justify-content: center;
+            text-align: center;
+            gap: 16px;
+        }
+        .intro-section-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            margin-bottom: 6px;
+        }
+        .intro-company-desc {
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            border-radius: 14px;
+            padding: 18px 16px;
+            margin-bottom: 2px;
+            color: #c7d2fe;
+            font-size: 15px;
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+        }
+        .intro-company-desc .highlight {
+            background: linear-gradient(135deg, #a78bfa, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        .intro-stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px 18px;
+            position: relative;
+        }
+        .intro-stat-card .stat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .intro-stat-card .stat-text {
+            color: #c7d2fe;
+            font-size: 15px;
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+        }
+        .intro-stat-card .stat-text .highlight {
+            background: linear-gradient(135deg, #a78bfa, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .intro-biz-section {
+            text-align: left;
+            padding: 0 4px;
+        }
+        .intro-biz-section h3 {
+            color: #a78bfa;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .biz-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .biz-card {
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: 12px;
+            padding: 14px 8px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .biz-card .biz-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+        .biz-card .biz-name {
+            font-size: 12px;
+            color: #a5b4fc;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        /* ============ 第3页 - 活动流程（汽车赛道主题） ============ */
+        .page-flow {
+            background: linear-gradient(180deg, #0a0f14 0%, #111827 25%, #0d1117 60%, #0a0f14 100%);
+            padding-top: 20px;
+            padding-bottom: 30px;
+            overflow-y: auto;
+            position: relative;
+        }
+        /* 赛道背景装饰 */
+        .page-flow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 60%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .flow-header {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .flow-title-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+        .flow-title {
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 6px;
+            position: relative;
+        }
+        .flow-title-underline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .flow-title-underline .line {
+            width: 30px;
+            height: 2px;
+            background: #f59e0b;
+            border-radius: 2px;
+        }
+        .flow-title-underline .car-icon {
+            font-size: 18px;
+            animation: drive 3s ease-in-out infinite;
+        }
+        @keyframes drive {
+            0%,
+            100% {
+                transform: translateX(-8px);
+            }
+            50% {
+                transform: translateX(8px);
+            }
+        }
+        .flow-subtitle {
+            font-size: 11px;
+            color: #8b7355;
+            letter-spacing: 4px;
+            margin-top: 8px;
+        }
+
+        /* 主赛道容器 */
+        .race-track {
+            position: relative;
+            padding: 0 4px;
+            z-index: 1;
+        }
+        /* 中央赛道线 */
+        .race-track::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            bottom: 20px;
+            width: 4px;
+            transform: translateX(-50%);
+            background: repeating-linear-gradient(180deg,
+                    #f59e0b 0px, #f59e0b 6px,
+                    #0a0f14 6px, #0a0f14 14px);
+            border-radius: 2px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .flow-card {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+        .flow-card:last-child {
+            margin-bottom: 0;
+        }
+        .flow-card:nth-child(odd) {
+            flex-direction: row;
+            padding-right: 50%;
+        }
+        .flow-card:nth-child(even) {
+            flex-direction: row-reverse;
+            padding-left: 50%;
+        }
+
+        /* 连接节点（轮胎造型） */
+        .flow-connector {
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f59e0b 30%, #92400e 60%, #0a0f14 70%);
+            z-index: 3;
+            transform: translateY(-50%);
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.6), 0 0 30px rgba(245, 158, 11, 0.2);
+            border: 2px solid #0a0f14;
+        }
+        .flow-connector::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #0a0f14;
+        }
+        .flow-card:nth-child(odd) .flow-connector {
+            right: calc(50% - 8px);
+        }
+        .flow-card:nth-child(even) .flow-connector {
+            left: calc(50% - 8px);
+        }
+
+        /* 卡片主体 */
+        .flow-card-inner {
+            flex: 1;
+            background: linear-gradient(160deg, rgba(30, 27, 20, 0.95) 0%, rgba(20, 18, 14, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 16px;
+            padding: 20px 18px;
+            position: relative;
+            overflow: visible;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .flow-card-inner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top right, rgba(245, 158, 11, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            border-radius: 16px;
+        }
+        /* 朝向赛道的装饰条 */
+        .flow-card-inner::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            bottom: 12px;
+            width: 3px;
+            background: linear-gradient(180deg, #f59e0b, #fbbf24, #f59e0b);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        .flow-card:nth-child(odd) .flow-card-inner::after {
+            right: 0;
+            border-radius: 2px 0 0 2px;
+        }
+        .flow-card:nth-child(even) .flow-card-inner::after {
+            left: 0;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* STEP 徽章 - 放在卡片外部上方 */
+        .step-badge {
+            position: absolute;
+            top: -14px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            z-index: 5;
+            color: #0a0f14;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .flow-card:nth-child(odd) .step-badge {
+            right: 16px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        }
+        .flow-card:nth-child(even) .step-badge {
+            left: 16px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        /* 卡片内容 */
+        .flow-card .card-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .flow-card .card-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fef3c7;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            padding-right: 10px;
+        }
+        .flow-card:nth-child(even) .card-name {
+            padding-right: 0;
+            padding-left: 10px;
+        }
+        .flow-card .card-desc {
+            font-size: 12px;
+            color: #b8a88a;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .flow-card .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .flow-card .card-tag {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 14px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        .tag-style-1 {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+        .tag-style-2 {
+            background: rgba(168, 133, 250, 0.12);
+            color: #a78bfa;
+            border: 1px solid rgba(168, 133, 250, 0.2);
+        }
+        .tag-style-3 {
+            background: rgba(52, 211, 153, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        /* 终点旗帜 */
+        .finish-flag {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .finish-flag .flag-icon {
+            font-size: 36px;
+            display: block;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0%,
+            100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+        .finish-flag .flag-text {
+            font-size: 11px;
+            color: #fbbf24;
+            letter-spacing: 3px;
+            margin-top: 4px;
+        }
+
+        /* ============ 第4页 - 打卡 ============ */
+        .page-punch {
+            background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+            padding-top: 24px;
+        }
+        .punch-header {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .punch-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            margin-bottom: 4px;
+        }
+        .punch-header .date {
+            font-size: 13px;
+            color: #8b8fbb;
+        }
+        .punch-time {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #e0e7ff;
+            margin-bottom: 22px;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+        }
+        .punch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .punch-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid;
+            border-radius: 14px;
+            padding: 18px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .punch-card:active {
+            transform: scale(0.95);
+        }
+        .punch-card .stamp-icon {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+        .punch-card .stamp-name {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+        .punch-card.border-gold {
+            border-color: rgba(245, 158, 11, 0.5);
+            color: #fbbf24;
+        }
+        .punch-card.border-gold .stamp-name {
+            color: #fbbf24;
+        }
+        .punch-card.border-silver {
+            border-color: rgba(192, 192, 192, 0.5);
+            color: #d1d5db;
+        }
+        .punch-card.border-silver .stamp-name {
+            color: #d1d5db;
+        }
+        .punch-card.border-bronze {
+            border-color: rgba(205, 127, 50, 0.5);
+            color: #d4a574;
+        }
+        .punch-card.border-bronze .stamp-name {
+            color: #d4a574;
+        }
+        .punch-card.punched {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .punch-card.punched::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #4ade80;
+        }
+        .punch-card .cancel-hint {
+            display: none;
+            font-size: 11px;
+            color: #ef4444;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+        .punch-card.punched .cancel-hint {
+            display: block;
+        }
+
+        .punch-record {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 14px;
+        }
+        .punch-record h3 {
+            font-size: 14px;
+            color: #8b8fbb;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .punch-record-list {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .punch-record-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 13px;
+            color: #c7d2fe;
+        }
+        .punch-record-item .tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .tag-gold {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+        .tag-silver {
+            background: rgba(192, 192, 192, 0.2);
+            color: #d1d5db;
+        }
+        .tag-bronze {
+            background: rgba(205, 127, 50, 0.2);
+            color: #d4a574;
+        }
+        .empty-record {
+            color: #4a4d6a;
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+        }
+
+        /* ============ 导航 ============ */
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 0 20px;
+            position: sticky;
+            bottom: 0;
+            background: rgba(13, 17, 23, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(139, 143, 187, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .nav-dot.active {
+            background: linear-gradient(135deg, #a78bfa, #6366f1);
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+            width: 24px;
+            border-radius: 4px;
+        }
+        .nav-label {
+            font-size: 10px;
+            color: #8b8fbb;
+            text-align: center;
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1c2333;
+            color: #a78bfa;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+        <div class="pages-wrapper" id="pagesWrapper">
+
+            <!-- 第1页：品牌页 -->
+            <div class="page page-brand active" data-page="0">
+                <div class="brand-badge">FORVIA 佛瑞亚</div>
+                <div class="brand-title">有福青年</div>
+                <div class="brand-subtitle">吉刻出发</div>
+                <div class="brand-name">FORVIA 佛瑞亚</div>
+                <div class="brand-slogan">Inspiring mobility</div>
+                <div class="brand-arrow" onclick="goToPage(1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 第2页：公司介绍 -->
+            <div class="page page-intro" data-page="1">
+                <div class="intro-section-title">关于我们</div>
+                <div class="intro-company-desc">
+                    <span class="highlight">FORVIA 佛瑞亚</span>是目前全球前10的汽车供应商
+                </div>
+                <div class="intro-stat-card">
+                    <div class="stat-icon">🚗</div>
+                    <div class="stat-text">
+                        目前全球<span class="highlight">每2辆车中</span>，<br>就有<span class="highlight">1辆</span>搭载着佛瑞亚的产品
+                    </div>
+                </div>
+                <div class="intro-biz-section">
+                    <h3>✦ 6 大业务部门 ✦</h3>
+                    <div class="biz-cards">
+                        <div class="biz-card">
+                            <div class="biz-icon">🪑</div>
+                            <div class="biz-name">座椅</div>
+                        </div>
+                        <div class="biz-card">
+                            <div class="biz-icon">🛋️</div>
+                            <div class="biz-name">内饰</div>
+                        </div>
+                        <div class="biz-card">
+                            <div class="biz-icon">⚡</div>
+                            <div class="biz-name">汽车电子</div>
+                        </div>
+                        <div class="biz-card">
+                            <div class="biz-icon">💡</div>
+                            <div class="biz-name">照明</div>
+                        </div>
+                        <div class="biz-card">
+                            <div class="biz-icon">🌿</div>
+                            <div class="biz-name">绿动智行</div>
+                        </div>
+                        <div class="biz-card">
+                            <div class="biz-icon">🔄</div>
+                            <div class="biz-name">生命周期<br>解决方案</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第3页：活动流程（汽车赛道主题） -->
+            <div class="page page-flow" data-page="2">
+                <div class="flow-header">
+                    <div class="flow-title-wrapper">
+                        <div class="flow-title">活动流程</div>
+                        <div class="flow-title-underline">
+                            <span class="line"></span>
+                            <span class="car-icon">🏎️</span>
+                            <span class="line"></span>
+                        </div>
+                    </div>
+                    <div class="flow-subtitle">RACE TO THE FINISH</div>
+                </div>
+                <div class="race-track" id="raceTrack"></div>
+                <div class="finish-flag">
+                    <span class="flag-icon">🏁</span>
+                    <span class="flag-text">FINISH LINE</span>
+                </div>
+            </div>
+
+            <!-- 第4页：打卡 -->
+            <div class="page page-punch" data-page="3">
+                <div class="punch-header">
+                    <h2>🏅 活动打卡</h2>
+                    <div class="date" id="dateDisplay"></div>
+                </div>
+                <div class="punch-time" id="timeDisplay">--:--:--</div>
+                <div class="punch-grid" id="punchGrid"></div>
+                <div class="punch-record">
+                    <h3>📝 打卡记录</h3>
+                    <div class="punch-record-list" id="recordList">
+                        <div class="empty-record">暂无记录</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="nav-dots" id="navDots"></div>
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+        const activities = [
+            { id: 'onboard', name: '入职日', border: 'bronze', icon: '🎯',
+                desc: '搭子匹配、Bingo 互动、小组打卡、时间胶囊全部安排上！帮你快速认识同频伙伴、摸清公司节奏，告别社恐尴尬，轻松开启你的 F+ 实习初体验～',
+                tags: ['搭子匹配', 'Bingo', '时间胶囊'], tagStyles: ['tag-style-1', 'tag-style-2', 'tag-style-3'] },
+            { id: 'visit', name: '展厅、实验室、工厂参观', border: 'gold', icon: '🏭',
+                desc: '想要实地打卡？这就带你解锁展厅、实验室和产线，沉浸式 get 汽车零部件从研发到生产的全流程！',
+                tags: ['展厅', '实验室', '产线'], tagStyles: ['tag-style-2', 'tag-style-3', 'tag-style-1'] },
+            { id: 'market', name: '市场趋势分享', border: 'silver', icon: '📊',
+                desc: '行业一手情报大公开！帮你快速拿捏汽车市场前沿动态，搞懂行业发展新风向，轻松跟上行业节奏不迷路～',
+                tags: ['行业情报', '前沿动态'], tagStyles: ['tag-style-3', 'tag-style-1'] },
+            { id: 'workshop', name: '技能工坊', border: 'silver', icon: '🛠️',
+                desc: '职场软技能修炼 + Power BI 实操双管齐下！沉浸式学习 + 个人成果展示，帮你解锁沟通协作实力、数据可视化硬技能，职场竞争力直接拉满！',
+                tags: ['软技能', 'Power BI', '成果展示'], tagStyles: ['tag-style-1', 'tag-style-2', 'tag-style-3'] },
+            { id: 'diy', name: '手作 DIY', border: 'bronze', icon: '🎨',
+                desc: '专属手作搞起来！亲手打造独一无二的小物件，在动手过程中轻松解压，收获满满的治愈感和成就感～',
+                tags: ['动手解压', '治愈感'], tagStyles: ['tag-style-2', 'tag-style-3'] },
+            { id: 'carbon', name: '碳中和知识竞赛', border: 'gold', icon: '🌍',
+                desc: '自学充电 + 趣味竞赛 + 即兴展示三重模式！还有专家在线点评，让你边玩边轻松 get 碳中和干货，解锁行业前沿新认知～',
+                tags: ['竞赛', '专家点评', '碳中和'], tagStyles: ['tag-style-3', 'tag-style-1', 'tag-style-2'] },
+            { id: 'dialogue', name: '成长对话圈', border: 'gold', icon: '💬',
+                desc: '圆桌交流安排上！投票选出大家最关心的职场话题，和优秀前辈面对面交流，你的职场成长小困惑，这里都能找到答案～',
+                tags: ['圆桌交流', '前辈面对面'], tagStyles: ['tag-style-1', 'tag-style-2'] },
+            { id: 'graduation', name: '结业展示', border: 'gold', icon: '🏆',
+                desc: '专属结业仪式已备好！一起回顾实习的点点滴滴，为超有料的夏日实习画上完美句号～',
+                tags: ['结业仪式', '回顾总结'], tagStyles: ['tag-style-2', 'tag-style-3'] },
+        ];
+
+        const borderLabels = {
+            gold: '金色',
+            silver: '银色',
+            bronze: '铜色',
+        };
+
+        // ============ 页面导航 ============
+        let currentPage = 0;
+        const totalPages = 4;
+        const pageNames = ['品牌', '公司介绍', '活动流程', '打卡'];
+
+        function goToPage(index) {
+            if (index < 0 || index >= totalPages) return;
+            const pages = document.querySelectorAll('.page');
+            pages.forEach((p, i) => {
+                p.classList.remove('active', 'prev');
+                if (i === index) p.classList.add('active');
+                else if (i < index) p.classList.add('prev');
+            });
+            currentPage = index;
+            updateNavDots();
+            if (index === 3) {
+                updateClock();
+                renderPunchGrid();
+                renderRecords();
+            }
+        }
+
+        function updateNavDots() {
+            const container = document.getElementById('navDots');
+            container.innerHTML = pageNames
+                .map(
+                    (name, i) =>
+                        `<div style="text-align:center;cursor:pointer" onclick="goToPage(${i})">
+                    <div class="nav-dot${i === currentPage ? ' active' : ''}"></div>
+                    <div class="nav-label">${name}</div>
+                </div>`
+                )
+                .join('');
+        }
+
+        // 滑动
+        let touchStartY = 0;
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+        });
+        document.addEventListener('touchend', e => {
+            const diff = touchStartY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 60) {
+                if (diff > 0 && currentPage < totalPages - 1) goToPage(currentPage + 1);
+                else if (diff < 0 && currentPage > 0) goToPage(currentPage - 1);
+            }
+        });
+
+        // ============ 第3页：赛车赛道布局 ============
+        function renderRaceTrack() {
+            const container = document.getElementById('raceTrack');
+            container.innerHTML = activities
+                .map(
+                    (a, i) => `
+                <div class="flow-card">
+                    <div class="flow-connector"></div>
+                    <div class="flow-card-inner">
+                        <div class="step-badge">STEP ${String(i + 1).padStart(2, '0')}</div>
+                        <span class="card-icon">${a.icon}</span>
+                        <div class="card-name">${a.name}</div>
+                        <div class="card-desc">${a.desc}</div>
+                        <div class="card-tags">
+                            ${a.tags.map((t, ti) => `<span class="card-tag ${a.tagStyles[ti]}">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `
+                )
+                .join('');
+        }
+
+        // ============ 第4页：打卡 ============
+        function updateClock() {
+            const now = new Date();
+            const timeEl = document.getElementById('timeDisplay');
+            const dateEl = document.getElementById('dateDisplay');
+            if (timeEl)
+                timeEl.textContent = now.toLocaleTimeString('zh-CN', { hour12: false });
+            if (dateEl)
+                dateEl.textContent = now.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'long',
+                });
+        }
+
+        function getTodayKey() {
+            return 'forvia_punch_' + new Date().toLocaleDateString('zh-CN');
+        }
+        function getRecords() {
+            const data = localStorage.getItem(getTodayKey());
+            return data ? JSON.parse(data) : [];
+        }
+        function saveRecords(records) {
+            localStorage.setItem(getTodayKey(), JSON.stringify(records));
+        }
+
+        function renderPunchGrid() {
+            const grid = document.getElementById('punchGrid');
+            const records = getRecords();
+            const punchedIds = records.map(r => r.id);
+            grid.innerHTML = activities
+                .map(a => {
+                    const isPunched = punchedIds.includes(a.id);
+                    return `
+                    <div class="punch-card border-${a.border}${isPunched ? ' punched' : ''}"
+                         onclick="togglePunch('${a.id}', '${a.name}', '${a.border}')">
+                        <div class="stamp-icon">${isPunched ? '✅' : '📍'}</div>
+                        <div class="stamp-name">${a.name}</div>
+                        <div class="cancel-hint">再次点击取消</div>
+                    </div>
+                `;
+                })
+                .join('');
+        }
+
+        function togglePunch(id, name, border) {
+            const records = getRecords();
+            const existingIndex = records.findIndex(r => r.id === id);
+            if (existingIndex >= 0) {
+                records.splice(existingIndex, 1);
+                saveRecords(records);
+                renderPunchGrid();
+                renderRecords();
+                showToast('↩️ ' + name + ' 已取消打卡');
+            } else {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('zh-CN', { hour12: false });
+                const record = { id, name, border, time: timeStr, timestamp: now.getTime() };
+                records.push(record);
+                saveRecords(records);
+                renderPunchGrid();
+                renderRecords();
+                showToast('✅ ' + name + ' 打卡成功！');
+            }
+        }
+
+        function renderRecords() {
+            const records = getRecords();
+            const container = document.getElementById('recordList');
+            if (records.length === 0) {
+                container.innerHTML = '<div class="empty-record">暂无记录</div>';
+                return;
+            }
+            container.innerHTML = records
+                .slice()
+                .reverse()
+                .map(
+                    r => `
+                <div class="punch-record-item">
+                    <span class="tag tag-${r.border}">${borderLabels[r.border]}</span>
+                    <span>${r.name}</span>
+                    <span>${r.time}</span>
+                </div>
+            `
+                )
+                .join('');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._tid);
+            t._tid = setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        // ============ 初始化 ============
+        function init() {
+            renderRaceTrack();
+            updateNavDots();
+            updateClock();
+            setInterval(() => {
+                if (currentPage === 3) updateClock();
+            }, 1000);
+        }
+        init();
+    </script>
+</body>
+</html>
